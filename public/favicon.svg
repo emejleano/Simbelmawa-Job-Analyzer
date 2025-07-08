@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="url(#grad1)" />
+  
+  <!-- Building icon -->
+  <rect x="18" y="22" width="12" height="20" fill="white" opacity="0.9"/>
+  <rect x="34" y="18" width="12" height="24" fill="white" opacity="0.9"/>
+  
+  <!-- Windows -->
+  <rect x="20" y="25" width="2" height="2" fill="#3B82F6"/>
+  <rect x="24" y="25" width="2" height="2" fill="#3B82F6"/>
+  <rect x="20" y="29" width="2" height="2" fill="#3B82F6"/>
+  <rect x="24" y="29" width="2" height="2" fill="#3B82F6"/>
+  <rect x="20" y="33" width="2" height="2" fill="#3B82F6"/>
+  <rect x="24" y="33" width="2" height="2" fill="#3B82F6"/>
+  
+  <rect x="36" y="21" width="2" height="2" fill="#8B5CF6"/>
+  <rect x="40" y="21" width="2" height="2" fill="#8B5CF6"/>
+  <rect x="36" y="25" width="2" height="2" fill="#8B5CF6"/>
+  <rect x="40" y="25" width="2" height="2" fill="#8B5CF6"/>
+  <rect x="36" y="29" width="2" height="2" fill="#8B5CF6"/>
+  <rect x="40" y="29" width="2" height="2" fill="#8B5CF6"/>
+  <rect x="36" y="33" width="2" height="2" fill="#8B5CF6"/>
+  <rect x="40" y="33" width="2" height="2" fill="#8B5CF6"/>
+  
+  <!-- Door -->
+  <rect x="22" y="37" width="4" height="5" fill="#3B82F6"/>
+  <rect x="38" y="37" width="4" height="5" fill="#8B5CF6"/>
+  
+  <!-- Ground line -->
+  <line x1="10" y1="42" x2="54" y2="42" stroke="white" stroke-width="2" opacity="0.7"/>
+</svg>
