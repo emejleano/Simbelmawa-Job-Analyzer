@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simbelmawa Job Analisis</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Simbelmawa Job Analyzer By Emejleano</h1>
+            <p>Analisis lowongan Magang Berdampak 2025 dan temukan rekomendasi terbaik untuk Anda</p>
+        </div>
+
+        <!-- Loading indicator -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Memuat data lowongan...</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="card" id="statsCard" style="display: none;">
+            <h2>Statistik Umum</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalLowongan">0</div>
+                    <div class="stat-label">Total Lowongan</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalMitra">0</div>
+                    <div class="stat-label">Total Mitra</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalProvinsi">0</div>
+                    <div class="stat-label">Total Provinsi</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalBidang">0</div>
+                    <div class="stat-label">Total Bidang</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Description Section -->
+        <div class="card" id="profileCard" style="display: none;">
+            <h2>Deskripsi Diri untuk Rekomendasi</h2>
+            <div class="profile-form">
+                <div class="form-group">
+                    <label for="nama">Nama:</label>
+                    <input type="text" id="nama" placeholder="Masukkan nama Anda">
+                </div>
+                <div class="form-group">
+                    <label for="jurusan">Jurusan/Program Studi:</label>
+                    <input type="text" id="jurusan" placeholder="Contoh: Teknik Informatika, Sistem Informasi">
+                </div>
+                <div class="form-group">
+                    <label for="semester">Semester:</label>
+                    <select id="semester">
+                        <option value="">Pilih Semester</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="skills">Keahlian/Skills:</label>
+                    <textarea id="skills" placeholder="Contoh: JavaScript, Python, UI/UX Design, Data Analysis, Machine Learning" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="minat">Minat Bidang:</label>
+                    <textarea id="minat" placeholder="Contoh: Web Development, Mobile Development, Data Science, Digital Marketing" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="lokasi">Lokasi Preferensi:</label>
+                    <input type="text" id="lokasi" placeholder="Contoh: Jakarta, Bandung, Surabaya (kosongkan jika tidak ada preferensi)">
+                </div>
+                <div class="form-group">
+                    <label for="pengalaman">Pengalaman (Opsional):</label>
+                    <textarea id="pengalaman" placeholder="Contoh: Pernah mengikuti project web development, magang di startup, organisasi kampus" rows="3"></textarea>
+                </div>
+                <button id="analyzeBtn" class="btn-primary">Analisis Rekomendasi</button>
+                <button id="resetProfileBtn" class="btn-secondary">Reset Form</button>
+            </div>
+            <div id="profileInfo" class="profile-info" style="display: none;">
+                <h3>Profil Anda:</h3>
+                <div id="profileSummary"></div>
+                <div id="extractedKeywords" class="keywords-container"></div>
+            </div>
+        </div>
+
+        <div id="analysisResult" class="card" style="display: none;"></div>
+
+
+        <!-- Recommendations Section -->
+        <div class="card" id="recommendationsCard" style="display: none;">
+            <h2>Saran Untuk Anda</h2>
+            <div id="recommendations"></div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container" id="chartsContainer" style="display: none;">
+            <div class="card">
+                <h2>Top 10 Mitra Terbanyak</h2>
+                <canvas id="mitraChart"></canvas>
+            </div>
+            
+            <div class="card">
+                <h2>Top 10 Provinsi</h2>
+                <canvas id="provinsiChart"></canvas>
+            </div>
+            
+            <div class="card">
+                <h2>Top 10 Bidang</h2>
+                <canvas id="bidangChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Word Cloud Section -->
+        <div class="card" id="wordcloudCard" style="display: none;">
+            <h2>Word Cloud Posisi</h2>
+            <div id="wordcloud"></div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="card" id="filterCard" style="display: none;">
+            <h2>Filter Lowongan</h2>
+            <div class="filter-grid">
+                <div class="filter-item">
+                    <label for="filterProvinsi">Provinsi:</label>
+                    <select id="filterProvinsi">
+                        <option value="">Semua Provinsi</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="filterBidang">Bidang:</label>
+                    <select id="filterBidang">
+                        <option value="">Semua Bidang</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="filterMitra">Mitra:</label>
+                    <select id="filterMitra">
+                        <option value="">Semua Mitra</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <button id="resetFilter" class="btn-secondary">Reset Filter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Table -->
+        <div class="card" id="resultsCard" style="display: none;">
+            <h2>Daftar Lowongan</h2>
+            <div class="results-info">
+                <p id="resultsCount">Menampilkan semua lowongan</p>
+            </div>
+            <div class="table-container">
+                <table id="jobTable">
+                    <thead>
+                        <tr>
+                            <th>Posisi</th>
+                            <th>Mitra</th>
+                            <th>Bidang</th>
+                            <th>Provinsi</th>
+                            <th>Kab/Kota</th>
+                            <th>Match %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jobTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
