@@ -3,7 +3,7 @@
 **Simbelmawa Job Analyzer** adalah aplikasi web interaktif yang membantu mahasiswa menemukan rekomendasi lowongan magang yang paling relevan berdasarkan profil pribadi seperti keahlian, minat, lokasi, dan jurusan. Proyek ini dikembangkan sebagai alat bantu visualisasi dan analisis data lowongan dengan antarmuka yang user-friendly.
 
 **Sumber Data**  
-  Scarping data langsung dari website magang berdampak.
+  Scraping data langsung dari website magang berdampak.
 
 
 ---
